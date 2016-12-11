@@ -13,7 +13,7 @@ defmodule Matchr.UserSkillView do
     %{id: user_skill.id,
       user_id: user_skill.user_id,
       skill_id: user_skill.skill_id,
-      knowledgable: user_skill.knowledgable,
+      can_teach: user_skill.can_teach,
       active: user_skill.active}
   end
 end

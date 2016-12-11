@@ -2,8 +2,8 @@ defmodule Matchr.UserSkill do
   use Matchr.Web, :model
 
   schema "user_skills" do
-    field :knowledgable, :boolean, default: false
-    field :active, :boolean, default: false
+    field :can_teach, :boolean
+    field :active, :boolean, default: true
     belongs_to :user, Matchr.User
     belongs_to :skill, Matchr.Skill
 
@@ -15,7 +15,7 @@ defmodule Matchr.UserSkill do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:knowledgable, :active])
-    |> validate_required([:knowledgable, :active])
+    |> cast(params, [:can_teach, :active])
+    |> validate_required([:can_teach, :active])
   end
 end

@@ -3,6 +3,7 @@ defmodule Matchr.User do
 
   schema "users" do
     field :name, :string
+    has_many :user_skills, Matchr.UserSkill
 
     timestamps()
   end

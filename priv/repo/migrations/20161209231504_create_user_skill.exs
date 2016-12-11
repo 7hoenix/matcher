@@ -3,8 +3,8 @@ defmodule Matchr.Repo.Migrations.CreateUserSkill do
 
   def change do
     create table(:user_skills) do
-      add :knowledgable, :boolean, default: false, null: false
-      add :active, :boolean, default: false, null: false
+      add :can_teach, :boolean, null: false
+      add :active, :boolean, default: true, null: false
       add :user_id, references(:users, on_delete: :nothing)
       add :skill_id, references(:skills, on_delete: :nothing)
 
