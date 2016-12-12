@@ -8,6 +8,7 @@ defmodule Matcher.Router do
   scope "/api", Matcher do
     pipe_through :api
 
+    get "/dashboard", DashboardController, :dashboard
     resources "/skills", SkillController, only: [:index]
   end
 end
