@@ -1,4 +1,4 @@
-defmodule Matchr.ErrorHelpers do
+defmodule Matcher.ErrorHelpers do
   @moduledoc """
   Conveniences for translating and building error messages.
   """
@@ -21,9 +21,9 @@ defmodule Matchr.ErrorHelpers do
     #     dgettext "errors", "is invalid"
     #
     if count = opts[:count] do
-      Gettext.dngettext(Matchr.Gettext, "errors", msg, msg, count, opts)
+      Gettext.dngettext(Matcher.Gettext, "errors", msg, msg, count, opts)
     else
-      Gettext.dgettext(Matchr.Gettext, "errors", msg, opts)
+      Gettext.dgettext(Matcher.Gettext, "errors", msg, opts)
     end
   end
 end

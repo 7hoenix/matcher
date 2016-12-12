@@ -1,12 +1,12 @@
-defmodule Matchr.UserView do
-  use Matchr.Web, :view
+defmodule Matcher.UserView do
+  use Matcher.Web, :view
 
   def render("index.json", %{users: users}) do
-    %{data: render_many(users, Matchr.UserView, "user.json")}
+    %{data: render_many(users, Matcher.UserView, "user.json")}
   end
 
   def render("show.json", %{user: user}) do
-    %{data: render_one(user, Matchr.UserView, "user.json")}
+    %{data: render_one(user, Matcher.UserView, "user.json")}
   end
 
   def render("user.json", %{user: user}) do

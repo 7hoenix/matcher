@@ -1,7 +1,7 @@
-defmodule Matchr.SkillControllerTest do
-  use Matchr.ConnCase
+defmodule Matcher.SkillControllerTest do
+  use Matcher.ConnCase
 
-  alias Matchr.Skill
+  alias Matcher.Skill
 
   setup %{conn: conn} do
     {:ok, conn: put_req_header(conn, "accept", "application/json")}

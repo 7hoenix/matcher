@@ -1,14 +1,14 @@
-defmodule Matchr.Endpoint do
-  use Phoenix.Endpoint, otp_app: :matchr
+defmodule Matcher.Endpoint do
+  use Phoenix.Endpoint, otp_app: :matcher
 
-  socket "/socket", Matchr.UserSocket
+  socket "/socket", Matcher.UserSocket
 
   # Serve at "/" the static files from "priv/static" directory.
   #
   # You should set gzip to true if you are running phoenix.digest
   # when deploying your static files in production.
   plug Plug.Static,
-    at: "/", from: :matchr, gzip: false,
+    at: "/", from: :matcher, gzip: false,
     only: ~w(css fonts images js favicon.ico robots.txt)
 
   # Code reloading can be explicitly enabled under the
@@ -33,8 +33,8 @@ defmodule Matchr.Endpoint do
   # Set :encryption_salt if you would also like to encrypt it.
   plug Plug.Session,
     store: :cookie,
-    key: "_matchr_key",
+    key: "_matcher_key",
     signing_salt: "7VKTYp5O"
 
-  plug Matchr.Router
+  plug Matcher.Router
 end

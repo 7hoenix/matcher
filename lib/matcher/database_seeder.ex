@@ -1,8 +1,8 @@
-defmodule Matchr.DatabaseSeeder do
-  alias Matchr.Repo
-  alias Matchr.User
-  alias Matchr.Skill
-  alias Matchr.UserSkill
+defmodule Matcher.DatabaseSeeder do
+  alias Matcher.Repo
+  alias Matcher.User
+  alias Matcher.Skill
+  alias Matcher.UserSkill
 
   def insert_user(name) do
     Repo.insert! %User{

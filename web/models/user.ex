@@ -1,9 +1,9 @@
-defmodule Matchr.User do
-  use Matchr.Web, :model
+defmodule Matcher.User do
+  use Matcher.Web, :model
 
   schema "users" do
     field :name, :string
-    has_many :user_skills, Matchr.UserSkill
+    has_many :user_skills, Matcher.UserSkill
 
     timestamps()
   end

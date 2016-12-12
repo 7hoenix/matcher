@@ -1,7 +1,7 @@
-defmodule Matchr.UserSkillTest do
-  use Matchr.ModelCase
+defmodule Matcher.UserSkillTest do
+  use Matcher.ModelCase
 
-  alias Matchr.UserSkill
+  alias Matcher.UserSkill
 
   @valid_attrs %{active: true, can_teach: true}
   @invalid_attrs %{}

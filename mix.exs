@@ -1,8 +1,8 @@
-defmodule Matchr.Mixfile do
+defmodule Matcher.Mixfile do
   use Mix.Project
 
   def project do
-    [app: :matchr,
+    [app: :matcher,
      version: "0.0.1",
      elixir: "~> 1.2",
      elixirc_paths: elixirc_paths(Mix.env),
@@ -17,7 +17,7 @@ defmodule Matchr.Mixfile do
   #
   # Type `mix help compile.app` for more information.
   def application do
-    [mod: {Matchr, []},
+    [mod: {Matcher, []},
      applications: [:phoenix, :phoenix_pubsub, :cowboy, :logger, :gettext,
                     :phoenix_ecto, :postgrex]]
   end

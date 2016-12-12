@@ -1,12 +1,12 @@
-defmodule Matchr.Web do
+defmodule Matcher.Web do
   @moduledoc """
   A module that keeps using definitions for controllers,
   views and so on.
 
   This can be used in your application as:
 
-      use Matchr.Web, :controller
-      use Matchr.Web, :view
+      use Matcher.Web, :controller
+      use Matcher.Web, :view
 
   The definitions below will be executed for every view,
   controller, etc, so keep them short and clean, focused
@@ -30,12 +30,12 @@ defmodule Matchr.Web do
     quote do
       use Phoenix.Controller
 
-      alias Matchr.Repo
+      alias Matcher.Repo
       import Ecto
       import Ecto.Query
 
-      import Matchr.Router.Helpers
-      import Matchr.Gettext
+      import Matcher.Router.Helpers
+      import Matcher.Gettext
     end
   end
 
@@ -46,9 +46,9 @@ defmodule Matchr.Web do
       # Import convenience functions from controllers
       import Phoenix.Controller, only: [get_csrf_token: 0, get_flash: 2, view_module: 1]
 
-      import Matchr.Router.Helpers
-      import Matchr.ErrorHelpers
-      import Matchr.Gettext
+      import Matcher.Router.Helpers
+      import Matcher.ErrorHelpers
+      import Matcher.Gettext
     end
   end
 
@@ -62,10 +62,10 @@ defmodule Matchr.Web do
     quote do
       use Phoenix.Channel
 
-      alias Matchr.Repo
+      alias Matcher.Repo
       import Ecto
       import Ecto.Query
-      import Matchr.Gettext
+      import Matcher.Gettext
     end
   end
 

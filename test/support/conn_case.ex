@@ -1,4 +1,4 @@
-defmodule Matchr.ConnCase do
+defmodule Matcher.ConnCase do
   @moduledoc """
   This module defines the test case to be used by
   tests that require setting up a connection.
@@ -20,23 +20,23 @@ defmodule Matchr.ConnCase do
       # Import conveniences for testing with connections
       use Phoenix.ConnTest
 
-      alias Matchr.Repo
+      alias Matcher.Repo
       import Ecto
       import Ecto.Changeset
       import Ecto.Query
 
-      import Matchr.Router.Helpers
+      import Matcher.Router.Helpers
 
       # The default endpoint for testing
-      @endpoint Matchr.Endpoint
+      @endpoint Matcher.Endpoint
     end
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Matchr.Repo)
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Matcher.Repo)
 
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(Matchr.Repo, {:shared, self()})
+      Ecto.Adapters.SQL.Sandbox.mode(Matcher.Repo, {:shared, self()})
     end
 
     {:ok, conn: Phoenix.ConnTest.build_conn()}

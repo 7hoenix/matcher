@@ -1,7 +1,7 @@
-defmodule Matchr.UserTest do
-  use Matchr.ModelCase
+defmodule Matcher.UserTest do
+  use Matcher.ModelCase
 
-  alias Matchr.User
+  alias Matcher.User
 
   @valid_attrs %{name: "some content"}
   @invalid_attrs %{}

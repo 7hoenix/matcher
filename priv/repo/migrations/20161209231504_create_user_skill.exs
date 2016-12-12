@@ -1,4 +1,4 @@
-defmodule Matchr.Repo.Migrations.CreateUserSkill do
+defmodule Matcher.Repo.Migrations.CreateUserSkill do
   use Ecto.Migration
 
   def change do

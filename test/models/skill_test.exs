@@ -1,7 +1,7 @@
-defmodule Matchr.SkillTest do
-  use Matchr.ModelCase
+defmodule Matcher.SkillTest do
+  use Matcher.ModelCase
 
-  alias Matchr.Skill
+  alias Matcher.Skill
 
   @valid_attrs %{name: "some content"}
   @invalid_attrs %{}

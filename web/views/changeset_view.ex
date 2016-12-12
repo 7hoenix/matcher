@@ -1,11 +1,11 @@
-defmodule Matchr.ChangesetView do
-  use Matchr.Web, :view
+defmodule Matcher.ChangesetView do
+  use Matcher.Web, :view
 
   @doc """
   Traverses and translates changeset errors.
 
   See `Ecto.Changeset.traverse_errors/2` and
-  `Matchr.ErrorHelpers.translate_error/1` for more details.
+  `Matcher.ErrorHelpers.translate_error/1` for more details.
   """
   def translate_errors(changeset) do
     Ecto.Changeset.traverse_errors(changeset, &translate_error/1)

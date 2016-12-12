@@ -1,11 +1,11 @@
-defmodule Matchr.UserSkill do
-  use Matchr.Web, :model
+defmodule Matcher.UserSkill do
+  use Matcher.Web, :model
 
   schema "user_skills" do
     field :can_teach, :boolean
     field :active, :boolean, default: true
-    belongs_to :user, Matchr.User
-    belongs_to :skill, Matchr.Skill
+    belongs_to :user, Matcher.User
+    belongs_to :skill, Matcher.Skill
 
     timestamps()
   end

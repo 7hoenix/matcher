@@ -1,5 +1,5 @@
-defmodule Matchr.ErrorView do
-  use Matchr.Web, :view
+defmodule Matcher.ErrorView do
+  use Matcher.Web, :view
 
   def render("404.json", _assigns) do
     %{errors: %{detail: "Page not found"}}

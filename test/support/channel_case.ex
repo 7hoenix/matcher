@@ -1,4 +1,4 @@
-defmodule Matchr.ChannelCase do
+defmodule Matcher.ChannelCase do
   @moduledoc """
   This module defines the test case to be used by
   channel tests.
@@ -20,22 +20,22 @@ defmodule Matchr.ChannelCase do
       # Import conveniences for testing with channels
       use Phoenix.ChannelTest
 
-      alias Matchr.Repo
+      alias Matcher.Repo
       import Ecto
       import Ecto.Changeset
       import Ecto.Query
 
 
       # The default endpoint for testing
-      @endpoint Matchr.Endpoint
+      @endpoint Matcher.Endpoint
     end
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Matchr.Repo)
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Matcher.Repo)
 
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(Matchr.Repo, {:shared, self()})
+      Ecto.Adapters.SQL.Sandbox.mode(Matcher.Repo, {:shared, self()})
     end
 
     :ok

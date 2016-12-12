@@ -6,15 +6,15 @@
 use Mix.Config
 
 # General application configuration
-config :matchr,
-  ecto_repos: [Matchr.Repo]
+config :matcher,
+  ecto_repos: [Matcher.Repo]
 
 # Configures the endpoint
-config :matchr, Matchr.Endpoint,
+config :matcher, Matcher.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "JaxVlitfXRhApLjAe272XCAgIYmm61zmb8RPtW5YwrFNIrdqd4J/FbScEopoayAF",
-  render_errors: [view: Matchr.ErrorView, accepts: ~w(json)],
-  pubsub: [name: Matchr.PubSub,
+  render_errors: [view: Matcher.ErrorView, accepts: ~w(json)],
+  pubsub: [name: Matcher.PubSub,
            adapter: Phoenix.PubSub.PG2]
 
 # Configures Elixir's Logger

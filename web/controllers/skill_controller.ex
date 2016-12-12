@@ -1,7 +1,7 @@
-defmodule Matchr.SkillController do
-  use Matchr.Web, :controller
+defmodule Matcher.SkillController do
+  use Matcher.Web, :controller
 
-  alias Matchr.Skill
+  alias Matcher.Skill
 
   def index(conn, _params) do
     skills = Repo.all(Skill)
@@ -20,7 +20,7 @@ defmodule Matchr.SkillController do
       {:error, changeset} ->
         conn
         |> put_status(:unprocessable_entity)
-        |> render(Matchr.ChangesetView, "error.json", changeset: changeset)
+        |> render(Matcher.ChangesetView, "error.json", changeset: changeset)
     end
   end
 
@@ -39,7 +39,7 @@ defmodule Matchr.SkillController do
       {:error, changeset} ->
         conn
         |> put_status(:unprocessable_entity)
-        |> render(Matchr.ChangesetView, "error.json", changeset: changeset)
+        |> render(Matcher.ChangesetView, "error.json", changeset: changeset)
     end
   end
 
