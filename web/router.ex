@@ -10,6 +10,5 @@ defmodule Matchr.Router do
 
     resources "/users", UserController, except: [:new, :edit]
     resources "/skills", SkillController, except: [:new, :edit]
-    resources "/user_skills", UserSkillController, except: [:new, :edit]
   end
 end
