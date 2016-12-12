@@ -3,7 +3,7 @@ defmodule Matchr.UserSkillTest do
 
   alias Matchr.UserSkill
 
-  @valid_attrs %{active: true, knowledgable: true}
+  @valid_attrs %{active: true, can_teach: true}
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do
