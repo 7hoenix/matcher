@@ -8,7 +8,6 @@ defmodule Matchr.Router do
   scope "/api", Matchr do
     pipe_through :api
 
-    resources "/users", UserController, except: [:new, :edit]
     resources "/skills", SkillController, only: [:index]
   end
 end
