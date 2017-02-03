@@ -4,13 +4,11 @@ defmodule Matcher.Skill do
   schema "skills" do
     field :name, :string
     has_many :user_skills, Matcher.UserSkill
+    has_many :user_matches, Matcher.UserMatch
 
     timestamps()
   end
 
-  @doc """
-  Builds a changeset based on the `struct` and `params`.
-  """
   def changeset(struct, params \\ %{}) do
     struct
     |> cast(params, [:name])

@@ -1,18 +1,18 @@
 defmodule Matcher.UserSkill do
   use Matcher.Web, :model
 
+  alias Matcher.User
+  alias Matcher.Skill
+
   schema "user_skills" do
     field :can_teach, :boolean
     field :active, :boolean, default: true
-    belongs_to :user, Matcher.User
-    belongs_to :skill, Matcher.Skill
+    belongs_to :user, User
+    belongs_to :skill, Skill
 
     timestamps()
   end
 
-  @doc """
-  Builds a changeset based on the `struct` and `params`.
-  """
   def changeset(struct, params \\ %{}) do
     struct
     |> cast(params, [:can_teach, :active])
