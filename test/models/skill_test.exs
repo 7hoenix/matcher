@@ -3,16 +3,17 @@ defmodule Matchr.SkillTest do
 
   alias Matchr.Skill
 
-  @valid_attrs %{name: "some content"}
-  @invalid_attrs %{}
+  @valid_attrs %{
+    name: "some content",
+  }
 
-  test "changeset with valid attributes" do
+  test "changeset is valid with valid attributes" do
     changeset = Skill.changeset(%Skill{}, @valid_attrs)
     assert changeset.valid?
   end
 
-  test "changeset with invalid attributes" do
-    changeset = Skill.changeset(%Skill{}, @invalid_attrs)
+  test "changeset requires name" do
+    changeset = Skill.changeset(%Skill{}, %{@valid_attrs | name: nil})
     refute changeset.valid?
   end
 end

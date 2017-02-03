@@ -2,7 +2,6 @@ defmodule Matchr.DatabaseSeeder do
   alias Matchr.Repo
   alias Matchr.User
   alias Matchr.Skill
-  alias Matchr.UserSkill
 
   def insert_user(name) do
     Repo.insert! %User{
@@ -13,14 +12,6 @@ defmodule Matchr.DatabaseSeeder do
   def insert_skill(name) do
     Repo.insert! %Skill{
       name: name
-    }
-  end
-
-  def insert_user_skill(user, skill) do
-    Repo.insert! %UserSkill{
-      user_id: user.id,
-      skill_id: skill.id,
-      can_teach: Enum.take_random([true, false], 1) |> Enum.at(0)
     }
   end
 

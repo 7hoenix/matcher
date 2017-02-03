@@ -1,15 +1,16 @@
-defmodule Matchr.Skill do
+defmodule Matchr.UserWantsToLearnSkill do
   use Matchr.Web, :model
 
-  schema "skills" do
-    field :name, :string
-    many_to_many :users_that_want_to_learn, Matchr.User, join_through: "user_wants_to_learn_skill"
-    many_to_many :users_that_can_teach, Matchr.User, join_through: "user_can_teach_skill"
+  schema "user_wants_to_learn_skill" do
+    belongs_to :user, Matchr.User
+    belongs_to :skill, Matchr.Skill
+
     timestamps()
   end
 
   @required_attributes [
-    :name,
+    :user_id,
+    :skill_id,
   ]
 
   @optional_attributes []

@@ -1,55 +1,68 @@
 defmodule Matchr.UserController do
   use Matchr.Web, :controller
 
-  alias Matchr.User
+  alias Matchr.Users
 
   def index(conn, _params) do
-    users = Repo.all(User)
+    users = Users.load_all
     render(conn, "index.json", users: users)
   end
 
-  def create(conn, %{"user" => user_params}) do
-    changeset = User.changeset(%User{}, user_params)
-
-    case Repo.insert(changeset) do
-      {:ok, user} ->
-        conn
-        |> put_status(:created)
-        |> put_resp_header("location", user_path(conn, :show, user))
-        |> render("show.json", user: user)
-      {:error, changeset} ->
-        conn
-        |> put_status(:unprocessable_entity)
-        |> render(Matchr.ChangesetView, "error.json", changeset: changeset)
-    end
-  end
-
   def show(conn, %{"id" => id}) do
-    user = Repo.get!(User, id)
-    render(conn, "show.json", user: user)
-  end
-
-  def update(conn, %{"id" => id, "user" => user_params}) do
-    user = Repo.get!(User, id)
-    changeset = User.changeset(user, user_params)
-
-    case Repo.update(changeset) do
-      {:ok, user} ->
-        render(conn, "show.json", user: user)
-      {:error, changeset} ->
-        conn
-        |> put_status(:unprocessable_entity)
-        |> render(Matchr.ChangesetView, "error.json", changeset: changeset)
+    case Users.load(id) do
+      nil -> conn |> put_status(404) |> render("not_found.json", id: id)
+      user -> render(conn, "show.json", user: user)
     end
   end
 
-  def delete(conn, %{"id" => id}) do
-    user = Repo.get!(User, id)
+  def create(conn, params) do
+    case Users.insert(user_data(params)) do
+      {:ok, user} ->
+        conn
+        |> put_status(201)
+        |> render("show.json", user: Users.load(user.id))
+      {:error, changeset} ->
+        conn
+        |> put_status(422)
+        |> render("invalid.json", errors: changeset.errors)
+    end
+  end
 
-    # Here we use delete! (with a bang) because we expect
-    # it to always work (and if it does not, it will raise).
-    Repo.delete!(user)
+  def update(conn, params) do
+    id = params["id"]
+    case Users.update(id, user_data(params)) do
+      {:ok, user} ->
+        conn
+        |> put_status(200)
+        |> render("show.json", user: Users.load(user.id))
+      {:not_found, id} ->
+        conn
+        |> put_status(404)
+        |> render("not_found.json", id: id)
+      {:error, changeset} ->
+        conn
+        |> put_status(422)
+        |> render("invalid.json", errors: changeset.errors)
+    end
+  end
 
-    send_resp(conn, :no_content, "")
+  def delete(conn, params) do
+    id = params["id"]
+    case Users.delete(id) do
+      {:ok, _} ->
+        conn
+        |> put_status(200)
+        |> render("delete.json")
+      {:not_found, id} ->
+        conn
+        |> put_status(404)
+        |> render("not_found.json", id: id)
+    end
+  end
+
+  defp user_data(params) do
+    %{
+      name: params["user"]["name"]
+    }
   end
 end
