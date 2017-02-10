@@ -3,16 +3,17 @@ defmodule Matchr.UserTest do
 
   alias Matchr.User
 
-  @valid_attrs %{name: "some content"}
-  @invalid_attrs %{}
+  @valid_attrs %{
+    name: "some content",
+  }
 
-  test "changeset with valid attributes" do
+  test "changeset is valid with valid attributes" do
     changeset = User.changeset(%User{}, @valid_attrs)
     assert changeset.valid?
   end
 
-  test "changeset with invalid attributes" do
-    changeset = User.changeset(%User{}, @invalid_attrs)
+  test "changeset requires name" do
+    changeset = User.changeset(%User{}, %{@valid_attrs | name: nil})
     refute changeset.valid?
   end
 end

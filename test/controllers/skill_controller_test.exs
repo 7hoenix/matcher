@@ -1,60 +1,125 @@
 defmodule Matchr.SkillControllerTest do
   use Matchr.ConnCase
 
-  alias Matchr.Skill
-  @valid_attrs %{name: "some content"}
-  @invalid_attrs %{}
+  alias Matchr.Skills
+  alias Matchr.SkillView
 
-  setup %{conn: conn} do
-    {:ok, conn: put_req_header(conn, "accept", "application/json")}
-  end
+  @skill_json %{
+    "name" => "skill name"
+  }
 
-  test "lists all entries on index", %{conn: conn} do
-    conn = get conn, skill_path(conn, :index)
-    assert json_response(conn, 200)["data"] == []
-  end
+  describe "create" do
+    test "creates a valid skill", %{conn: conn} do
+      conn = conn |> post("/api/skills", %{"skill" => @skill_json})
 
-  test "shows chosen resource", %{conn: conn} do
-    skill = Repo.insert! %Skill{}
-    conn = get conn, skill_path(conn, :show, skill)
-    assert json_response(conn, 200)["data"] == %{"id" => skill.id,
-      "name" => skill.name}
-  end
+      assert conn.status == 201
+      assert Skills.count == 1
+    end
 
-  test "renders page not found when id is nonexistent", %{conn: conn} do
-    assert_error_sent 404, fn ->
-      get conn, skill_path(conn, :show, -1)
+    test "returns errors for invalid skill params", %{conn: conn} do
+      conn = conn |> post("/api/skills", %{"skill" => %{"name" => nil}})
+
+      assert conn.status == 422
+      assert Skills.count == 0
+      assert json_response(conn, 422) == %{
+        "errors" => [
+          %{
+            "status" => 422,
+            "source" => "name",
+            "detail" => "can't be blank",
+          }
+        ]
+      }
     end
   end
 
-  test "creates and renders resource when data is valid", %{conn: conn} do
-    conn = post conn, skill_path(conn, :create), skill: @valid_attrs
-    assert json_response(conn, 201)["data"]["id"]
-    assert Repo.get_by(Skill, @valid_attrs)
+  describe "index" do
+    defp skill_index(skill) do
+      SkillView.render("skill.json", skill: (Skills.load(skill.id)))
+    end
+
+    test"renders a list of skills", %{conn: conn} do
+      {:ok, skill1} = Skills.insert(%{name: "John"})
+      {:ok, skill2} = Skills.insert(%{name: "Jane"})
+
+      conn = conn |> get("/api/skills")
+
+      assert json_response(conn, 200) == %{
+        "data" => [
+          skill_index(skill1),
+          skill_index(skill2),
+        ]
+      }
+    end
   end
 
-  test "does not create resource and renders errors when data is invalid", %{conn: conn} do
-    conn = post conn, skill_path(conn, :create), skill: @invalid_attrs
-    assert json_response(conn, 422)["errors"] != %{}
+  describe "show" do
+    test "renders a skill", %{conn: conn} do
+      {:ok, skill} = Skills.insert(%{name: "John"})
+
+      conn = conn |> get("/api/skills/#{skill.id}")
+
+      assert json_response(conn, 200) == %{
+        "data" => skill_index(skill)
+        }
+    end
+
+    test "returns not found for invalid skill id", %{conn: conn} do
+      conn = conn |> get("/api/skills/999")
+
+      assert json_response(conn, 404) == %{
+        "errors" => [
+          %{
+            "status" => 404,
+            "detail" => "Skill 999 not found",
+          }
+        ]
+      }
+
+    end
   end
 
-  test "updates and renders chosen resource when data is valid", %{conn: conn} do
-    skill = Repo.insert! %Skill{}
-    conn = put conn, skill_path(conn, :update, skill), skill: @valid_attrs
-    assert json_response(conn, 200)["data"]["id"]
-    assert Repo.get_by(Skill, @valid_attrs)
+  describe "update" do
+    test "updates a valid skill", %{conn: conn} do
+      {:ok, skill} = Skills.insert(%{name: "John"})
+
+      conn = conn |> put("/api/skills/#{skill.id}", %{"skill" => %{"name" => "new"}})
+
+      assert conn.status == 200
+      assert Skills.count == 1
+      assert Skills.load(skill.id).name == "new"
+    end
+
+    test "retruns 404 for invalid skill id", %{conn: conn} do
+
+      conn = conn |> put("/api/skills/999", %{"skill" => %{"name" => "new"}})
+
+      assert conn.status == 404
+    end
+
+    test "returns 422 for invalid json", %{conn: conn} do
+      {:ok, skill} = Skills.insert(%{name: "John"})
+
+      conn = conn |> put("/api/skills/#{skill.id}", %{"skill" => %{"name" => nil}})
+
+      assert conn.status == 422
+    end
   end
 
-  test "does not update chosen resource and renders errors when data is invalid", %{conn: conn} do
-    skill = Repo.insert! %Skill{}
-    conn = put conn, skill_path(conn, :update, skill), skill: @invalid_attrs
-    assert json_response(conn, 422)["errors"] != %{}
-  end
+  describe "delete" do
+    test "removes a skill when that id exists", %{conn: conn} do
+      {:ok, skill} = Skills.insert(%{name: "John"})
 
-  test "deletes chosen resource", %{conn: conn} do
-    skill = Repo.insert! %Skill{}
-    conn = delete conn, skill_path(conn, :delete, skill)
-    assert response(conn, 204)
-    refute Repo.get(Skill, skill.id)
+      conn = conn |> delete("/api/skills/#{skill.id}")
+
+      assert conn.status == 200
+      assert Skills.count == 0
+    end
+
+    test "returns 404 when trying to a skill id that doesn't exist", %{conn: conn} do
+      conn = conn |> delete("/api/skills/999")
+
+      assert conn.status == 404
+    end
   end
 end

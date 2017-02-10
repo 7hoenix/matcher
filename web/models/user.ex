@@ -3,17 +3,20 @@ defmodule Matchr.User do
 
   schema "users" do
     field :name, :string
-    has_many :user_skills, Matchr.UserSkill
-
+    many_to_many :wants_to_learn_skills, Matchr.Skill, join_through: "user_wants_to_learn_skill", on_replace: :delete
+    many_to_many :can_teach_skills, Matchr.Skill, join_through: "user_can_teach_skill", on_replace: :delete
     timestamps()
   end
 
-  @doc """
-  Builds a changeset based on the `struct` and `params`.
-  """
+  @required_attributes [
+    :name,
+  ]
+
+  @optional_attributes []
+
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:name])
-    |> validate_required([:name])
+    |> cast(params, @required_attributes ++ @optional_attributes)
+    |> validate_required(@required_attributes)
   end
 end
