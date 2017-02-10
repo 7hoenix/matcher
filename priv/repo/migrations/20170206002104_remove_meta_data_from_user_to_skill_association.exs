@@ -7,15 +7,11 @@ defmodule Matchr.Repo.Migrations.RemoveMetaDataFromUserToSkillAssociation do
     create table(:user_can_teach_skill) do
       add :user_id, references(:users)
       add :skill_id, references(:skills)
-
-      timestamps()
     end
 
     create table(:user_wants_to_learn_skill) do
       add :user_id, references(:users)
       add :skill_id, references(:skills)
-
-      timestamps()
     end
   end
   def down do

@@ -78,6 +78,7 @@ defmodule Matchr.SkillControllerTest do
 
     end
   end
+
   describe "update" do
     test "updates a valid skill", %{conn: conn} do
       {:ok, skill} = Skills.insert(%{name: "John"})

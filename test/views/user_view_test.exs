@@ -3,8 +3,6 @@ defmodule Matchr.UserViewTest do
   alias Matchr.UserView
   alias Matchr.Users
   alias Matchr.Skills
-  alias Matchr.UserCanTeachSkills
-  alias Matchr.UserWantsToLearnSkills
 
   def insert_user(user_attrs \\ %{}) do
     %{
@@ -22,11 +20,6 @@ defmodule Matchr.UserViewTest do
     |> Skills.insert
   end
 
-  @valid_user_skill_attrs %{
-    user_id: 1,
-    skill_id: 1,
-  }
-
   describe "show" do
     test "renders a user" do
       {:ok, user} = insert_user()
@@ -42,12 +35,9 @@ defmodule Matchr.UserViewTest do
     end
 
     test "renders a user with skills" do
-      {:ok, user} = insert_user()
       {:ok, skill1} = insert_skill()
       {:ok, skill2} = insert_skill(%{name: "skill two"})
-      {:ok, _} = UserCanTeachSkills.insert(%{@valid_user_skill_attrs | user_id: user.id, skill_id: skill1.id})
-      {:ok, _} = UserWantsToLearnSkills.insert(%{@valid_user_skill_attrs | user_id: user.id, skill_id: skill2.id})
-
+      {:ok, user} = insert_user(%{can_teach_skills: [skill1], wants_to_learn_skills: [skill2]})
 
       rendered_user = UserView.render("show.json", user: Users.load(user.id))
 

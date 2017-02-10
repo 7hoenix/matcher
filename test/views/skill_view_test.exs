@@ -3,8 +3,6 @@ defmodule Matchr.SkillViewTest do
   alias Matchr.SkillView
   alias Matchr.Skills
   alias Matchr.Users
-  alias Matchr.UserCanTeachSkills
-  alias Matchr.UserWantsToLearnSkills
 
   def insert_skill(skill_attrs \\ %{}) do
     %{
@@ -36,12 +34,10 @@ defmodule Matchr.SkillViewTest do
       }
     end
 
-    test "renders a user with skills" do
-      {:ok, skill} = insert_skill()
+    test "renders a skill with users" do
       {:ok, user1} = insert_user()
       {:ok, user2} = insert_user(%{name: "other"})
-      {:ok, _} = UserCanTeachSkills.insert(%{user_id: user1.id, skill_id: skill.id})
-      {:ok, _} = UserWantsToLearnSkills.insert(%{user_id: user2.id, skill_id: skill.id})
+      {:ok, skill} = insert_skill(%{users_that_can_teach: [user1], users_that_want_to_learn: [user2]})
 
       rendered_skill = SkillView.render("show.json", skill: Skills.load(skill.id))
 

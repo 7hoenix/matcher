@@ -13,7 +13,6 @@ defmodule Matchr.UserView do
     }
   end
 
-
   def render("not_found.json", %{id: id}) do
     %{
       "errors" => [
@@ -38,6 +37,12 @@ defmodule Matchr.UserView do
     |> put_wants_to_learn_skills(user)
   end
 
+  def render("invalid.json", %{errors: errors}) do
+    %{
+      "errors" => Enum.map(errors, &render_validation_error/1)
+    }
+  end
+
   defp put_can_teach_skills(json, user) do
     case user.can_teach_skills do
       %Ecto.Association.NotLoaded{} -> json
@@ -52,12 +57,6 @@ defmodule Matchr.UserView do
       [] -> json
       skills -> Map.put(json, "wantsToLearnSkills", render_many(skills, Matchr.SkillView, "skill.json"))
     end
-  end
-
-  def render("invalid.json", %{errors: errors}) do
-    %{
-      "errors" => Enum.map(errors, &render_validation_error/1)
-    }
   end
 
   defp render_validation_error({field, {message, _}}) do
