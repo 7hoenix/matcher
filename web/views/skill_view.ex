@@ -34,20 +34,20 @@ defmodule Matchr.SkillView do
       "id" => skill.id,
       "name" => skill.name,
     }
-    |> put_users_that_can_teach(skill)
-    |> put_users_that_want_to_learn(skill)
+    |> put_teachers(skill)
+    |> put_learners(skill)
   end
 
-  defp put_users_that_can_teach(json, skill) do
-    case skill.users_that_can_teach do
+  defp put_teachers(json, skill) do
+    case skill.teachers do
       %Ecto.Association.NotLoaded{} -> json
       [] -> json
       users -> Map.put(json, "usersThatCanTeach", render_many(users, Matchr.UserView, "user.json"))
     end
   end
 
-  defp put_users_that_want_to_learn(json, skill) do
-    case skill.users_that_want_to_learn do
+  defp put_learners(json, skill) do
+    case skill.learners do
       %Ecto.Association.NotLoaded{} -> json
       [] -> json
       users -> Map.put(json, "usersThatWantToLearn", render_many(users, Matchr.UserView, "user.json"))

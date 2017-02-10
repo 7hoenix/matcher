@@ -20,21 +20,21 @@ defmodule Matchr.Skills do
 
   defp assoc_users(changeset, skill_attributes) do
    changeset
-    |> assoc_users_that_want_to_learn(skill_attributes)
-    |> assoc_users_that_can_teach(skill_attributes)
+    |> assoc_learners(skill_attributes)
+    |> assoc_teachers(skill_attributes)
   end
 
-  defp assoc_users_that_want_to_learn(changeset, skill_attributes) do
-    case skill_attributes[:users_that_want_to_learn] do
+  defp assoc_learners(changeset, skill_attributes) do
+    case skill_attributes[:learners] do
       nil -> changeset
-      _ -> Ecto.Changeset.put_assoc(changeset, :users_that_want_to_learn, skill_attributes[:users_that_want_to_learn])
+      _ -> Ecto.Changeset.put_assoc(changeset, :learners, skill_attributes[:learners])
     end
   end
 
-  defp assoc_users_that_can_teach(changeset, skill_attributes) do
-    case skill_attributes[:users_that_can_teach] do
+  defp assoc_teachers(changeset, skill_attributes) do
+    case skill_attributes[:teachers] do
       nil -> changeset
-      _ -> Ecto.Changeset.put_assoc(changeset, :users_that_can_teach, skill_attributes[:users_that_can_teach])
+      _ -> Ecto.Changeset.put_assoc(changeset, :teachers, skill_attributes[:teachers])
     end
   end
 
@@ -42,8 +42,8 @@ defmodule Matchr.Skills do
     case Repo.get(Skill, id) do
       nil -> nil
       skill -> skill
-      |> Repo.preload(:users_that_want_to_learn)
-      |> Repo.preload(:users_that_can_teach)
+      |> Repo.preload(:learners)
+      |> Repo.preload(:teachers)
     end
   end
 
@@ -53,15 +53,15 @@ defmodule Matchr.Skills do
 
   def load_all() do
     list
-    |> preload(:users_that_want_to_learn)
-    |> preload(:users_that_can_teach)
+    |> preload(:learners)
+    |> preload(:teachers)
     |> Repo.all
   end
 
   def load_all(query) do
     query
-    |> preload(:users_that_want_to_learn)
-    |> preload(:users_that_can_teach)
+    |> preload(:learners)
+    |> preload(:teachers)
     |> Repo.all
   end
 
