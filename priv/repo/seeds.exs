@@ -21,4 +21,4 @@ skill_names = ["sketch", "elixir", "elm", "clojure", "css3"]
 users = names |> Enum.map(fn name -> insert_user name end)
 skills = skill_names |> Enum.map(fn skill_name -> insert_skill skill_name end)
 
-(1..10) |> Enum.each(fn _ -> insert_user_skill(take_random_from(users), take_random_from(skills)) end)
+# (1..10) |> Enum.each(fn _ -> insert_user_skill(take_random_from(users), take_random_from(skills)) end)
