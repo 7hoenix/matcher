@@ -37,7 +37,7 @@ defmodule Matchr.SkillViewTest do
     test "renders a skill with users" do
       {:ok, user1} = insert_user()
       {:ok, user2} = insert_user(%{name: "other"})
-      {:ok, skill} = insert_skill(%{users_that_can_teach: [user1], users_that_want_to_learn: [user2]})
+      {:ok, skill} = insert_skill(%{teachers: [user1], learners: [user2]})
 
       rendered_skill = SkillView.render("show.json", skill: Skills.load(skill.id))
 
