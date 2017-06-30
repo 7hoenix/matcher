@@ -62,7 +62,7 @@ defmodule Matchr.UserController do
 
   defp user_data(params) do
     %{
-      name: params["user"]["name"]
+      name: params["user"]["name"],
     }
   end
 end

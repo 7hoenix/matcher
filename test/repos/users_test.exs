@@ -1,14 +1,11 @@
 defmodule Matchr.UsersTest do
+  import Matchr.Support.Users
   use Matchr.ModelCase
   alias Matchr.Users
 
-  @valid_user_attrs %{
-    name: "name",
-  }
-
   describe "insert" do
     test "inserts a user" do
-      {code, inserted_user} = Users.insert(@valid_user_attrs)
+      {code, inserted_user} = Users.insert(%{valid_user_attrs | name: "name"})
 
       assert code == :ok
       assert Users.count == 1
@@ -16,7 +13,7 @@ defmodule Matchr.UsersTest do
     end
 
     test "insert returns error code for invalid changeset" do
-      {code, _} = Users.insert(%{@valid_user_attrs | name: nil})
+      {code, _} = Users.insert(%{valid_user_attrs | name: nil})
 
       assert code == :error
       assert Users.count == 0
@@ -25,7 +22,7 @@ defmodule Matchr.UsersTest do
 
   describe "load" do
     test "load user by id" do
-      {:ok, inserted_user} = Users.insert(@valid_user_attrs)
+      {:ok, inserted_user} = Users.insert(valid_user_attrs)
       user_id = inserted_user.id
       user = Users.load(user_id)
 
@@ -39,8 +36,8 @@ defmodule Matchr.UsersTest do
 
   describe "load_all" do
     test "loads all users" do
-      {:ok, _inserted_user1} = Users.insert(@valid_user_attrs)
-      {:ok, _inserted_user2} = Users.insert(@valid_user_attrs)
+      insert_user
+      insert_user
 
       users = Users.load_all()
 
@@ -50,20 +47,20 @@ defmodule Matchr.UsersTest do
 
   describe "update" do
     test "updates user name" do
-      {:ok, inserted_user} = Users.insert(@valid_user_attrs)
+      {:ok, inserted_user} = Users.insert(valid_user_attrs)
       {:ok, _} = Users.update(inserted_user.id, %{name: "new name"})
 
       assert Users.load(inserted_user.id).name == "new name"
     end
 
     test "returns not found for invalid user id" do
-      assert {:not_found, _} = Users.update(999, @valid_user_attrs)
+      assert {:not_found, _} = Users.update(999, valid_user_attrs)
     end
   end
 
   describe "delete" do
     test "deletes a user" do
-      {:ok, inserted_user} = Users.insert(@valid_user_attrs)
+      {:ok, inserted_user} = Users.insert(valid_user_attrs)
 
       {code, _} = Users.delete(inserted_user.id)
       assert code == :ok

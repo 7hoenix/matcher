@@ -1,24 +1,10 @@
 defmodule Matchr.UserViewTest do
   use Matchr.ConnCase, async: true
+  import Matchr.Support.Users
+  import Matchr.Support.Skills
   alias Matchr.UserView
   alias Matchr.Users
   alias Matchr.Skills
-
-  def insert_user(user_attrs \\ %{}) do
-    %{
-      name: "name"
-    }
-    |> Map.merge(user_attrs)
-    |> Users.insert
-  end
-
-  def insert_skill(skill_attrs \\ %{}) do
-    %{
-      name: "skill name"
-    }
-    |> Map.merge(skill_attrs)
-    |> Skills.insert
-  end
 
   describe "show" do
     test "renders a user" do

@@ -1,16 +1,12 @@
 defmodule Matchr.SkillControllerTest do
   use Matchr.ConnCase
-
+  import Matchr.Support.Skills
   alias Matchr.Skills
   alias Matchr.SkillView
 
-  @skill_json %{
-    "name" => "skill name"
-  }
-
   describe "create" do
     test "creates a valid skill", %{conn: conn} do
-      conn = conn |> post("/api/skills", %{"skill" => @skill_json})
+      conn = conn |> post("/api/skills", %{"skill" => valid_skill_json})
 
       assert conn.status == 201
       assert Skills.count == 1
